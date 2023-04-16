@@ -20,15 +20,15 @@ const Register = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+                form.reset();
             })
             .catch(err => {
                 console.log(err.message);
                 setError(err.message);
             })
+        
     }
-    const handleClick = e =>{
-        console.log(e.target);
-    }
+
     return (
         <form className="hero min-h-screen bg-base-200" onSubmit={handleSubmit}>
             <div className="hero-content flex-col">
@@ -49,7 +49,7 @@ const Register = () => {
                             </label>
                             <input type="password" name='password' placeholder="password" className="input input-bordered" required/>
                             <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
                             </label>
                             <label className="label">
                                 <Link to='/login' className="label-text-alt link link-hover">Already have an account?<button className="btn btn-link">Login</button></Link>

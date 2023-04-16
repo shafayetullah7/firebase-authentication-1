@@ -1,11 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from './AuthProvider';
 
 const Login = () => {
-    
+    const {user,setUser,loginUser} = useContext(AuthContext);
+    const [error,setError] = useState('');
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        setError('');
+        console.log('hello world');
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        console.log(email,password);
+
+        loginUser(email,password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                setUser(loggedUser);
+                form.reset();
+            })
+            .catch(err => {
+                setError(err.message);
+            })
+        
+    }
     return (
-        <form className="hero min-h-screen bg-base-200">
+        <form className="hero min-h-screen bg-base-200" onSubmit={handleSubmit}>
             <div className="hero-content flex-col">
                 <div className="text-center lg:text-left">
                 <h1 className="text-5xl font-bold">Login now!</h1>
@@ -30,6 +54,7 @@ const Login = () => {
                                 <Link to='/register' className="label-text-alt link link-hover">Do not have an account?<button className="btn btn-link">Register</button></Link>
                             </label>
                         </div>
+                        <p className='text-red-500 text-xs'>{error}</p>
                         <div className="form-control mt-6">
                             <button type='submit' className="btn btn-primary">Login</button>
                         </div>
